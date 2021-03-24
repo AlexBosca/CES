@@ -47,14 +47,21 @@ public class Main {
             e.printStackTrace();
         }
 
-        components = gradleFiles.stream()
+        components = gradleFiles
+                .stream()
                 .map(folder -> {
-
                     int index = folder.lastIndexOf("/");
-                    return new Component(folder.substring(0, index), new ArrayList<String>());})
+                    if(index != -1)
+                        return new Component(folder.substring(0, index), new ArrayList<String>());
+                    return null;
+                })
+                .filter(file -> {
+                    return file != null;
+                })
                 .collect(Collectors.toList());
 
         List<Component> finalComponents = components;
+        Component defaultComponent = new Component("@", new ArrayList<>());
         allFiles.stream().forEach(file -> {
            Component component = null;
 
@@ -66,25 +73,13 @@ public class Main {
             if(component != null) {
                 component.getFiles().add(file);
             } else {
-                //add to default
+                defaultComponent.files.add(file);
             }
         });
 
-        // now we should create output file as a .json file
-        JSONArray outputArray = new JSONArray();
+        components.add(defaultComponent);
 
         try (FileWriter file = new FileWriter(outputFile)) {
-            /*components.stream().forEach(component -> {
-                JSONObject myObj = new JSONObject();
-                myObj.put("qualifiedName",component.getFullyQualifiedName());
-                myObj.put("files", component.getFiles());
-
-                outputArray.add(myObj);
-            });
-
-
-            file.write(outputArray.toJSONString());
-            file.flush();*/
 
             file.write(new ObjectMapper().writeValueAsString(components));
             file.flush();
@@ -96,8 +91,8 @@ public class Main {
 }
 
 class Component{
-    private String fullyQualifiedName;
-    private List<String> files;
+    String fullyQualifiedName;
+    List<String> files;
 
     public String getFullyQualifiedName() {
         return fullyQualifiedName;
