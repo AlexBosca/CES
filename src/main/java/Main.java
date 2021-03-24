@@ -1,5 +1,10 @@
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -41,20 +46,53 @@ public class Main {
         }
 
         components = gradleFiles.stream()
-                .map(folder -> new Component(folder.substring(0, folder.length() - 1), new ArrayList<String>()))
+                .map(folder -> {
+
+                    int index = folder.lastIndexOf("/");
+                    return new Component(folder.substring(0, index), new ArrayList<String>());})
                 .collect(Collectors.toList());
 
-        allFiles.stream().map(file -> {
-            Component component = components.stream().filter(c -> file.startsWith(c.fullyQualifiedName))
-                    .collect(Collectors.toList()).get(0);
+        List<Component> finalComponents = components;
+        allFiles.stream().forEach(file -> {
+           Component component = null;
 
+                    if(finalComponents.stream().filter(c -> file.startsWith(c.getFullyQualifiedName()))
+                    .collect(Collectors.toList()).size() > 0) {
+                     component = finalComponents.stream().filter(c -> file.startsWith(c.getFullyQualifiedName()))
+                                .collect(Collectors.toList()).get(0);
+                    }
+            if(component != null) {
+                component.getFiles().add(file);
+            } else {
+                //add to default
+            }
         });
+
+        // now we should create output file as a .json file
+        JSONArray outputArray = new JSONArray();
+
+        try (FileWriter file = new FileWriter(outputFile)) {
+            components.stream().forEach(component -> {
+                JSONObject myObj = new JSONObject();
+                myObj.put("qualifiedName",component.getFullyQualifiedName());
+                myObj.put("files", component.getFiles());
+
+                outputArray.add(myObj);
+            });
+
+
+            file.write(outputArray.toJSONString());
+            file.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 
 class Component{
-    String fullyQualifiedName;
-    List<String> files;
+    private String fullyQualifiedName;
+    private List<String> files;
 
     public String getFullyQualifiedName() {
         return fullyQualifiedName;
