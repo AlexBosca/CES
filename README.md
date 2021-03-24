@@ -18,7 +18,7 @@ This project takes an input file that contains all the classes in a project (the
    1. Run maven clean install in order to obtain a packed jar from given class
    2. Create an input txt file which is input for the jar and a result.json file which represents the output<br>
    3. Open a command promt window
-   4. Run command **java -jar gradle-component-definer.jar $<outputFile> $<inputFile>**<br>
+   4. Run command **java -jar gradle-component-definer.jar outputFile inputFile**<br>
     **it is very important not to change the order of the parameters because the file will overwrite the input file with an empty file, ie the output one**
 
 
