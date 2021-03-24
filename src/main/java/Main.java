@@ -1,3 +1,4 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -5,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -72,7 +74,7 @@ public class Main {
         JSONArray outputArray = new JSONArray();
 
         try (FileWriter file = new FileWriter(outputFile)) {
-            components.stream().forEach(component -> {
+            /*components.stream().forEach(component -> {
                 JSONObject myObj = new JSONObject();
                 myObj.put("qualifiedName",component.getFullyQualifiedName());
                 myObj.put("files", component.getFiles());
@@ -82,6 +84,9 @@ public class Main {
 
 
             file.write(outputArray.toJSONString());
+            file.flush();*/
+
+            file.write(new ObjectMapper().writeValueAsString(components));
             file.flush();
 
         } catch (IOException e) {

@@ -11,7 +11,7 @@
       "name": "Gradle Modules Component Definer",
       "type": "componentDefiner",
       "description": "Generates Components based on Gradle Modules",
-      "commandTemplate": "java -jar gradle-component-definer-1.0-SNAPSHOT.jar ${outputFile} ${filesToGroup}",
+      "commandTemplate": "java -jar gradle-component-definer.jar ${outputFile} ${filesToGroup}",
       "configurationFields": []
     }
   ]
