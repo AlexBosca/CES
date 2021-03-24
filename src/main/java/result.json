@@ -1,0 +1,9 @@
+[{"qualifiedName":"ceva1",
+  "files":[
+    "ceva1\/src\/main\/java\/org\/dxworks\/dxplatform\/services\/impl\/ConfigurationServiceImpl.java",
+    "ceva1\/src\/main\/java\/org\/dxworks\/dxplatform\/config\/CustomWebConfiguration.java",
+    "ceva1\/ceva1.gradle"]},
+  {"qualifiedName":"ceva2",
+    "files":["ceva2\/src\/main\/java\/org\/dxworks\/dxplatform\/services\/impl\/ConfigurationServiceImpl.java",
+      "ceva2\/src\/main\/java\/org\/dxworks\/dxplatform\/config\/CustomWebConfiguration.java",
+      "ceva2\/ceva1.gradle"]}]
