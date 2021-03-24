@@ -1,0 +1,18 @@
+{
+  "id": "gradle-component-definer",
+  "name": "Gradle Component Definer",
+  "description": "This plugin splits files into components based on gradle modules",
+  "version": "0.0.1",
+  "schemaVersion": "1",
+  "icon": "",
+  "commands": [
+    {
+      "id": "gradle-component-definer",
+      "name": "Gradle Modules Component Definer",
+      "type": "componentDefiner",
+      "description": "Generates Components based on Gradle Modules",
+      "commandTemplate": "java -jar gradle-component-definer-1.0-SNAPSHOT.jar ${outputFile} ${filesToGroup}",
+      "configurationFields": []
+    }
+  ]
+}

@@ -1,7 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -44,10 +43,12 @@ public class Main {
                 .map(folder -> new Component(folder.substring(0, folder.length() - 1), new ArrayList<String>()))
                 .collect(Collectors.toList());
 
+        List<Component> finalComponents = components;
         allFiles.stream().map(file -> {
-            Component component = components.stream().filter(c -> file.startsWith(c.fullyQualifiedName))
+            Component component = finalComponents.stream().filter(c -> file.startsWith(c.fullyQualifiedName))
                     .collect(Collectors.toList()).get(0);
 
+            return null;
         });
     }
 }
